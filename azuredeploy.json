@@ -11,7 +11,7 @@
     }
   },
   "variables": {
-      "webSiteName": "[concat(tolower(parameters('hostingPlanName')), '-func', uniqueString(resourceGroup().id))]",
+      "functionAppName": "[concat(tolower(parameters('hostingPlanName')), '-func', uniqueString(resourceGroup().id))]",
       "storageAccountName": "[concat('storage', uniqueString(resourceGroup().id))]",
       "StorageAccountId": "[concat(resourceGroup().id,'/providers/Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
       "repoUrl": "https://github.com/bretthackermsft/dynamic-tags.git",
@@ -55,14 +55,14 @@
     {
       "type": "Microsoft.Web/sites",
       "kind": "functionapp",
-      "name": "[variables('webSiteName')]",
+      "name": "[variables('functionAppName')]",
       "tags": {
         "displayName": "FunctionApp"
       },
       "apiVersion": "2016-08-01",
       "location": "[resourceGroup().location]",
       "properties": {
-        "name": "[variables('webSiteName')]",
+        "name": "[variables('functionAppName')]",
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]"
       },
       "dependsOn": [
@@ -71,21 +71,26 @@
     },
     {
       "type": "Microsoft.Web/sites/config",
-      "name": "[concat(variables('webSiteName'), '/appsettings')]",
+      "name": "[concat(variables('functionAppName'), '/appsettings')]",
       "apiVersion": "2016-08-01",
       "location": "[resourceGroup().location]",
       "tags": {
         "displayName": "WebAppSettings"
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Web/sites', variables('webSiteName'))]"
+        "[resourceId('Microsoft.Web/sites', variables('functionAppName'))]"
       ],
       "properties": {
-        "PROJECT": "DynamicTags/DynamicTags.csproj"
+        "PROJECT": "DynamicTags/DynamicTags.csproj",
+        "AzureWebJobsStorage": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]",
+        "AzureWebJobsDashboard": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]",
+        "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]",
+        "WEBSITE_CONTENTSHARE": "[toLower(variables('functionAppName'))]",
+        "FUNCTIONS_EXTENSION_VERSION": "~1"
       }
     },
     {
-      "name": "[concat(variables('webSiteName'), '/web')]",
+      "name": "[concat(variables('functionAppName'), '/web')]",
       "type": "Microsoft.Web/sites/sourcecontrols",
       "location": "[resourceGroup().location]",
       "tags": {
@@ -93,7 +98,7 @@
       },
       "apiVersion": "2016-03-01",
       "dependsOn": [
-        "[resourceId('Microsoft.Web/sites', variables('webSiteName'))]"
+        "[resourceId('Microsoft.Web/sites', variables('functionAppName'))]"
       ],
       "tags": {
         "displayName": "WebCodeDeploy"

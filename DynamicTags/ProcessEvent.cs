@@ -17,7 +17,7 @@ namespace DynamicTags
                      * For example, grab properties, call into an HR system and determine a cost center for the creator's division,
                      * then use a service principal here to update the resource group tags with the value
                     */
-                    
+
                     break;
             }
             return true;

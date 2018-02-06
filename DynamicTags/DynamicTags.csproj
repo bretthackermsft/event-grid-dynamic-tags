@@ -4,6 +4,12 @@
     <AzureFunctionsVersion>v2</AzureFunctionsVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Table\Common.cs" />
+    <Compile Remove="Table\WriteLogTable.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="azuredeploy.json" />
+    <None Remove="azuredeploy.parameters.json" />
     <None Remove="KochDemo2 - Web Deploy.pubxml" />
   </ItemGroup>
   <ItemGroup>
@@ -21,5 +27,8 @@
   <ItemGroup>
     <None Include="Properties\PublishProfiles\KochDemo2 - Web Deploy.pubxml.user" />
   </ItemGroup>
-  <ProjectExtensions><VisualStudio><UserProperties azuredeploy_1json__JSONSchema="https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json" /></VisualStudio></ProjectExtensions>
+  <ItemGroup>
+    <Folder Include="Table\" />
+  </ItemGroup>
+  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
 </Project>

@@ -42,9 +42,10 @@ namespace DynamicTags
                     response.Data.httpRequest = JToken.Parse(response.Data.httpRequest.ToString());
 
                     ResourceWriteSuccess evt = JsonConvert.DeserializeObject<ResourceWriteSuccess>(JsonConvert.SerializeObject(response.Data));
-                    ProcessEvent.Process(evt);
+                    var logItem = ProcessEvent.Process(evt);
 
                     log.Info(String.Format("Processed subscription event with data:\r\n{0}", requestBody));
+                    log.Info(String.Format("Resulting log data:\r\n{0}", JsonConvert.SerializeObject(logItem)));
                 }
 
                 return new OkResult();

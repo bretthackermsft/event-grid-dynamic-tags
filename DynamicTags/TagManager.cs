@@ -32,6 +32,7 @@ namespace DynamicTags
 
                 if (data.Count == 1 && data[0].EventType == EventType.SubscriptionValidationEvent)
                 {
+                    log.Info(String.Format("Registering event grid..."));
                     return new OkObjectResult(GetValidationResponse((string)data[0].Data.validationCode));
                 }
 
@@ -44,8 +45,8 @@ namespace DynamicTags
                     ResourceWriteSuccess evt = JsonConvert.DeserializeObject<ResourceWriteSuccess>(JsonConvert.SerializeObject(response.Data));
                     var logItem = ProcessEvent.Process(evt);
 
-                    log.Info(String.Format("Processed subscription event with data:\r\n{0}", requestBody));
-                    log.Info(String.Format("Resulting log data:\r\n{0}", JsonConvert.SerializeObject(logItem)));
+                    //log.Info(String.Format("Processed subscription event with data:\r\n{0}", requestBody));
+                    log.Info(String.Format("New event - log data:\r\n{0}", JsonConvert.SerializeObject(logItem)));
                 }
 
                 return new OkResult();
@@ -53,6 +54,7 @@ namespace DynamicTags
             catch (Exception ex)
             {
                 log.Error("Error processing event", ex, requestBody);
+                log.Error("Err evt data", null, requestBody);
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }

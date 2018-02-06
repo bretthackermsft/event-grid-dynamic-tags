@@ -11,7 +11,7 @@
     }
   },
   "variables": {
-      "webSiteName": "[concat(tolower(parameters('hostingPlanName')), '-web', uniqueString(resourceGroup().id))]",
+      "webSiteName": "[concat(tolower(parameters('hostingPlanName')), '-func', uniqueString(resourceGroup().id))]",
       "storageAccountName": "[concat('storage', uniqueString(resourceGroup().id))]",
       "StorageAccountId": "[concat(resourceGroup().id,'/providers/Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
       "repoUrl": "https://github.com/bretthackermsft/dynamic-tags.git",
@@ -77,9 +77,6 @@
       "tags": {
         "displayName": "WebAppSettings"
       },
-      "tags": {
-      },
-      "loadBalancing": "LeastRequests",
       "cors": {
         "allowedOrigins": [
           "https://functions.azure.com",

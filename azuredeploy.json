@@ -77,13 +77,6 @@
       "tags": {
         "displayName": "WebAppSettings"
       },
-      "cors": {
-        "allowedOrigins": [
-          "https://functions.azure.com",
-          "https://functions-staging.azure.com",
-          "https://functions-next.azure.com"
-        ]
-      },
       "dependsOn": [
         "[resourceId('Microsoft.Web/sites', variables('webSiteName'))]"
       ],

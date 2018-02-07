@@ -65,7 +65,6 @@
       "properties": {
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]",
         "siteConfig": {
-          "alwaysOn": true,
           "appSettings": [
             {
               "name": "FUNCTIONS_EXTENSION_VERSION",

@@ -4,8 +4,9 @@
     <AzureFunctionsVersion>v2</AzureFunctionsVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Table\Common.cs" />
-    <Compile Remove="Table\WriteLogTable.cs" />
+    <Compile Remove="Table\**" />
+    <EmbeddedResource Remove="Table\**" />
+    <None Remove="Table\**" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="azuredeploy.json" />
@@ -26,9 +27,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\KochDemo2 - Web Deploy.pubxml.user" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Table\" />
   </ItemGroup>
   <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
 </Project>

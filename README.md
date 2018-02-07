@@ -10,20 +10,31 @@ __Details__
 ```powershell
 #Login-AzureRmAccount
 
-$functionAppUrl = "https://[YOUR APP FQDN]/api/TagManager"
-$eventGridSubName = "MyEventGrid1"
+$functionAppName = "[YOUR APP NAME]"
+$functionAppApiKey = "[FUNCTION API KEY]"
+$eventGridSubName = "[EVENT GRID SUBSCRIPTION NAME]"
+
+$functionAppUrl = "https://$functionAppName.azurewebsites.net/api/TagManager?code=$functionAppApiKey"
 $includedEventTypes = "Microsoft.Resources.ResourceWriteSuccess"
 
-New-AzureRmEventGridSubscription -Endpoint $functionAppUrl -EventSubscriptionName $eventGridSubName -EndpointType webhook -IncludedEventType $includedEventTypes
+New-AzureRmEventGridSubscription `
+    -Endpoint $functionAppUrl `
+    -EventSubscriptionName $eventGridSubName `
+    -EndpointType webhook `
+    -IncludedEventType $includedEventTypes
 
 ```
+
+Retrieve the Function app name and API key from within the portal after deploying the template:  ![alt text][App1]
+
 * ARM template deploys the following:
   * Azure Function App
   * Azure Storage account
-* Requires the following (see step-by-step deployment instructions above for details):
-  1. Azure Event Grid Subscription
+* Requires the following:
+  1. Azure Event Grid Subscription (deploy via PSH script, sample above)
 
 ## As-Is Code
 
 This code is made available as a sample to demonstrate processing Azure administration events as part of a larger compliance strategy. It should not be utilized directly in production without review and enhancement by your dev team or a partner.
 
+[App1]: ./Images/FunctionSettings.jpg "Function Settings"

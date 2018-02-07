@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamicTags", "DynamicTags\DynamicTags.csproj", "{17D70E76-FFC6-4B78-BB08-8BF65CEE7B4E}"
 EndProject
@@ -10,6 +10,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		azuredeploy.json = azuredeploy.json
 		azuredeploy.parameters.json = azuredeploy.parameters.json
 		readme.md = readme.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{F268181C-8B38-43C3-BF9B-483D16C91E9A}"
+	ProjectSection(SolutionItems) = preProject
+		Images\FunctionSettings.jpg = Images\FunctionSettings.jpg
 	EndProjectSection
 EndProject
 Global
@@ -25,6 +30,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F268181C-8B38-43C3-BF9B-483D16C91E9A} = {64810889-66D6-4066-956C-D51355B244FA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C87B56B7-5876-48A4-8D76-87FA586C7663}

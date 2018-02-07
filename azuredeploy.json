@@ -53,61 +53,61 @@
       }
     },
     {
+      "apiVersion": "2015-08-01",
+      "name": "[variables('functionAppName')]",
       "type": "Microsoft.Web/sites",
       "kind": "functionapp",
-      "name": "[variables('functionAppName')]",
-      "tags": {
-        "displayName": "FunctionApp"
-      },
-      "apiVersion": "2016-08-01",
       "location": "[resourceGroup().location]",
-      "properties": {
-        "name": "[variables('functionAppName')]",
-        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]"
-      },
       "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
         "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]"
+      ],
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]",
+        "siteConfig": {
+          "alwaysOn": true,
+          "appSettings": [
+            {
+              "name": "FUNCTIONS_EXTENSION_VERSION",
+              "value": "~1"
+            },
+            {
+              "name": "Project",
+              "value": "src"
+            }
+          ]
+        }
+      },
+      "resources": [
+        {
+          "apiVersion": "2015-08-01",
+          "name": "appsettings",
+          "type": "config",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/Sites', variables('functionAppName'))]",
+            "[resourceId('Microsoft.Web/Sites/sourcecontrols', variables('functionAppName'), 'web')]",
+            "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+          ],
+          "properties": {
+            "PROJECT": "DynamicTags/DynamicTags.csproj",
+            "AzureWebJobsStorage": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]",
+            "AzureWebJobsDashboard": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]"
+          }
+        },
+        {
+          "apiVersion": "2015-08-01",
+          "name": "web",
+          "type": "sourcecontrols",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites/', variables('functionAppName'))]"
+          ],
+          "properties": {
+            "RepoUrl": "[variables('repoUrl')]",
+            "branch": "[variables('repoBranch')]",
+            "IsManualIntegration": true
+          }
+        }
       ]
-    },
-    {
-      "type": "Microsoft.Web/sites/config",
-      "name": "[concat(variables('functionAppName'), '/appsettings')]",
-      "apiVersion": "2016-08-01",
-      "location": "[resourceGroup().location]",
-      "tags": {
-        "displayName": "WebAppSettings"
-      },
-      "dependsOn": [
-        "[resourceId('Microsoft.Web/sites', variables('functionAppName'))]"
-      ],
-      "properties": {
-        "PROJECT": "DynamicTags/DynamicTags.csproj",
-        "AzureWebJobsStorage": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]",
-        "AzureWebJobsDashboard": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]",
-        "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]",
-        "WEBSITE_CONTENTSHARE": "[toLower(variables('functionAppName'))]",
-        "FUNCTIONS_EXTENSION_VERSION": "~1"
-      }
-    },
-    {
-      "name": "[concat(variables('functionAppName'), '/web')]",
-      "type": "Microsoft.Web/sites/sourcecontrols",
-      "location": "[resourceGroup().location]",
-      "tags": {
-        "displayName": "SourceControl"
-      },
-      "apiVersion": "2016-03-01",
-      "dependsOn": [
-        "[resourceId('Microsoft.Web/sites', variables('functionAppName'))]"
-      ],
-      "tags": {
-        "displayName": "WebCodeDeploy"
-      },
-      "properties": {
-        "RepoUrl": "[variables('repoUrl')]",
-        "branch": "[variables('repoBranch')]",
-        "IsManualIntegration": true
-      }
     }
   ]
 }

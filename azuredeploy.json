@@ -71,8 +71,8 @@
               "value": "~1"
             },
             {
-              "name": "Project",
-              "value": "src"
+              "name": "PROJECT",
+              "value": "DynamicTags/DynamicTags.csproj"
             }
           ]
         }
@@ -88,7 +88,6 @@
             "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
           ],
           "properties": {
-            "PROJECT": "DynamicTags/DynamicTags.csproj",
             "AzureWebJobsStorage": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]",
             "AzureWebJobsDashboard": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(variables('storageAccountid'),'2015-05-01-preview').key1)]"
           }

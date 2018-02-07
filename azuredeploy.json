@@ -14,7 +14,7 @@
     "functionAppName": "[concat(tolower(parameters('hostingPlanName')), '-func', uniqueString(resourceGroup().id))]",
     "storageAccountName": "[concat('storage', uniqueString(resourceGroup().id))]",
     "StorageAccountId": "[concat(resourceGroup().id,'/providers/Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
-    "repoUrl": "https://github.com/bretthackermsft/dynamic-tags.git",
+    "repoUrl": "https://github.com/bretthackermsft/event-grid-dynamic-tags.git",
     "repoBranch": "master"
   },
   "resources": [

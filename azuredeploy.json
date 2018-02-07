@@ -74,8 +74,8 @@
               "value": "~1"
             },
             {
-              "name": "Project",
-              "value": "DynamicTags"
+              "name": "PROJECT",
+              "value": "DynamicTags/DynamicTags.csproj"
             }
           ]
         }
